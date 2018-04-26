@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\intelligent_parking.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\intelligent_parking.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Apr 25 21:59:49 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Apr 26 10:47:45 2018
 <BR><P>
 <H3>Maximum Stack Usage =        132 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -385,7 +385,8 @@ Global Symbols
 <P><STRONG><a name="[bf]"></a>GPIO_StructInit</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text), UNUSED)
 
 <P><STRONG><a name="[75]"></a>GPIO_ReadInputDataBit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Judge_close
+<BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Judge_close
 </UL>
 
 <P><STRONG><a name="[c0]"></a>GPIO_ReadInputData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text), UNUSED)
@@ -396,12 +397,14 @@ Global Symbols
 
 <P><STRONG><a name="[69]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI1_Init
+<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOA_init
 </UL>
 
 <P><STRONG><a name="[6d]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring
+<BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring
 </UL>
 
 <P><STRONG><a name="[c3]"></a>GPIO_WriteBit</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f10x_gpio.o(.text), UNUSED)
@@ -798,7 +801,7 @@ Global Symbols
 
 <P><STRONG><a name="[138]"></a>TIM_ClearITPendingBit</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[66]"></a>GPIOA_init</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, gpio.o(.text))
+<P><STRONG><a name="[66]"></a>GPIOA_init</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = GPIOA_init &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
@@ -824,7 +827,7 @@ Global Symbols
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring
 </UL>
 
-<P><STRONG><a name="[6c]"></a>ring</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[6c]"></a>ring</STRONG> (Thumb, 120 bytes, Stack size 8 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = ring &rArr; delay_ms
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
@@ -838,7 +841,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Judge_close
 </UL>
 
-<P><STRONG><a name="[6e]"></a>Judge_close</STRONG> (Thumb, 234 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[6e]"></a>Judge_close</STRONG> (Thumb, 296 bytes, Stack size 8 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = Judge_close &rArr; PcdAuthState &rArr; PcdComMF522 &rArr; ClearBitMask &rArr; ReadRawRC
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare3
@@ -856,10 +859,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[44]"></a>main</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, main.o(.text))
+<P><STRONG><a name="[44]"></a>main</STRONG> (Thumb, 162 bytes, Stack size 0 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = main &rArr; Judge_close &rArr; PcdAuthState &rArr; PcdComMF522 &rArr; ClearBitMask &rArr; ReadRawRC
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare3
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadInputDataBit
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_configuration
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PcdReset
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PcdHalt

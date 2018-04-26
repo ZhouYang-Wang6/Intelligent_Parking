@@ -48,21 +48,21 @@ void ring(u32 rnum)
 		{
 		case 0:
 			GPIO_ResetBits(GPIOA,GPIO_Pin_4);
-			delay_ms(500);
+			delay_ms(50);
 			GPIO_SetBits(GPIOA,GPIO_Pin_4);
 			break;
 		case 1:
 			GPIO_ResetBits(GPIOA,GPIO_Pin_4);
-			delay_ms(500);
+			delay_ms(50);
 			GPIO_SetBits(GPIOA,GPIO_Pin_4);
-			delay_ms(500);
+			delay_ms(50);
 			GPIO_ResetBits(GPIOA,GPIO_Pin_4);
-			delay_ms(500);
+			delay_ms(50);
 			GPIO_SetBits(GPIOA,GPIO_Pin_4);
 			break;
-		case 3:
+		case 2:
 			GPIO_ResetBits(GPIOA,GPIO_Pin_4);
-			delay_ms(1500);
+			delay_ms(200);
 			GPIO_SetBits(GPIOA,GPIO_Pin_4);
 			break;
 		}
@@ -113,44 +113,45 @@ void Judge_close(void)
 		status=MI_ERR;
 	}
 	//写卡
-	//status = PcdWrite(s, RFID_W);
-	//if (status == MI_OK)
-	//{
-		//status=MI_ERR;
-	//}
+//	status = PcdWrite(s, RFID_W);
+//	if (status == MI_OK)
+//	{
+//		status=MI_ERR;
+//	}
 
 	//读卡
 	status=PcdRead(s,RFID_R);
 	if(status==MI_OK)
 	{
 		status=MI_ERR;
-	}
-	//有空位且是验证用户
-	if((user_check() == 1) && (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0)==0) && (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_1)==0) && (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_2)==0))
-	{
-		ring(0);
-		TIM_SetCompare3(TIM2,750);
-		delay_ms(1000);
-		TIM_SetCompare3(TIM2,250);
-		if(user_flag == 1)
+		//有空位且是验证用户
+		if((user_check() == 1) && ((GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8)==1) || (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_9)==1) || (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_10)==1)))
 		{
-		}
+			ring(0);
+			TIM_SetCompare3(TIM2,750);
+			delay_ms(500);
+			TIM_SetCompare3(TIM2,250);
+			if(user_flag == 1)
+			{
+			}
 
-		user_flag = 0;
-		memset(RFID_R,0,16);
+			user_flag = 0;
+			memset(RFID_R,0,16);
+		}
+		//非验证用户
+		else if(user_check() == 0)
+		{
+			user_flag = 1;
+			ring(2);
+		}
+		//无空位或两者皆不是
+		else if(((GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8)==1) || (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_9)==1) || (GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_10)==1))==0)
+		{
+			user_flag = 1;
+			ring(1);
+		}
 	}
-	//非验证用户
-	else if(user_check() == 0)
-	{
-		user_flag = 1;
-		ring(1);
-	}
-	//无空位或两者皆不是
-	else
-	{
-		user_flag = 1;
-		ring(2);
-	}
+	
 }
 
 
@@ -170,6 +171,20 @@ int main(void)
 	delay_ms(30);
 	while(1)
 	{
+		if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8)==0)
+			GPIO_ResetBits(GPIOB,GPIO_Pin_6);
+		else
+			GPIO_SetBits(GPIOB,GPIO_Pin_6);
+		
+		if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_9)==0)
+			GPIO_ResetBits(GPIOB,GPIO_Pin_7);
+		else
+			GPIO_SetBits(GPIOB,GPIO_Pin_7);
+		
+		if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_10)==0)
+			GPIO_ResetBits(GPIOB,GPIO_Pin_8);
+		else
+			GPIO_SetBits(GPIOB,GPIO_Pin_8);
 		Judge_close();
 		PcdHalt();
 
